@@ -1,22 +1,15 @@
 # Lista de convidados
 
-Página responsiva com 37 convidados em quatro categorias: Cantores (3), Família (7), Testemunhas (10) e Convidados comuns (17).
+Página responsiva com os 37 convidados fornecidos, organizados em Cantores, Família, Testemunhas e Convidados comuns.
 
-## Recursos
+Recursos: busca sem distinção de acentos, filtros por categoria, totais automáticos, ordenação alfabética, duplas de testemunhas e impressão da seleção.
 
-- Busca por nome, ignorando acentos e maiúsculas.
-- Filtros por categoria e contagem dos resultados.
-- Ordenação alfabética ou ordem original.
-- Identificação das duplas de testemunhas.
-- Impressão dos resultados exibidos.
-- Sem dependências externas.
-
-## Publicar
+## Publicação no GitHub Pages
 
 Em Settings → Pages, escolha Deploy from a branch, selecione main e / (root), e salve.
 
-Endereço após a publicação: https://paulo-unibra.github.io/lista-de-convidados/
+Endereço após publicar: https://paulo-unibra.github.io/lista-de-convidados/
 
-## Atualizar nomes
+## Atualizar
 
-Edite a constante groups no index.html. O total exibido considera a lista inicial de 37 pessoas; ao adicionar/remover pessoas, atualize também os textos de total.
+Edite a constante groups em index.html. Os totais são calculados automaticamente. Não exige instalação nem dependências externas.
