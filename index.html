@@ -17,7 +17,7 @@
 </main><footer>Organizada em <span>5 categorias</span> · As testemunhas são contadas individualmente.</footer>
 <script>
 const groups=[["Cantores",["Vinícius","Natália","Pedro"]],["Família",["Valéria","Xarinha","Dudu","Gediane","Juliana","Pedreiro","Júlio"]],["Testemunhas",["Evandro","Dinda","Lucas","Zama","Evanderson","Aline","Adriana","Marcelo","Winto Paulo","Ana"]],["Convidados comuns",["Riquelme","Joás","Evely","Mateus (filho do Pb. Wilton)","Pb. Tiago","Claudivane Maria Silva dos Santos","Rebeka","Tiago","Jenefer","Silas","Pb. Waldomiro","Irmã Geane (esposa do Pb. Waldomiro)","Isnael Jeremias","Fabiana","Elias Simões","Rosângela Maria"]],["Empresa",["Lucas Neri","Lucas Numeriano","Rodrigo","Douglas Numeriano","José Roberto Júnior"]]];
-const onlineGuests=new Set(["Lucas Neri","Lucas Numeriano","Rodrigo","Douglas Numeriano","José Roberto Júnior","Valéria","Xarinha","Dudu","Gediane","Juliana","Pedreiro","Júlio"]);
+const onlineGuests=new Set(["Lucas Neri","Lucas Numeriano","Rodrigo","Douglas Numeriano","José Roberto Júnior","Valéria","Xarinha","Dudu","Gediane","Juliana","Pedreiro","Júlio","Vinícius","Natália","Pedro"]);
 const deliveryFor=name=>onlineGuests.has(name)?"Online":"Presencial";
 const pairs={Evandro:"Dinda",Dinda:"Evandro",Lucas:"Zama",Zama:"Lucas",Evanderson:"Aline",Aline:"Evanderson",Adriana:"Marcelo",Marcelo:"Adriana","Winto Paulo":"Ana",Ana:"Winto Paulo"};
 const guestTotal=groups.reduce((sum,g)=>sum+g[1].length,0);
