@@ -17,10 +17,12 @@
 <script>
 const groups=[["Cantores",["Vinícius","Natália","Pedro"]],["Família",["Valéria","Xarinha","Dudu","Gediane","Juliana","Pedreiro","Júlio"]],["Testemunhas",["Evandro","Dinda","Lucas","Zama","Evanderson","Aline","Adriana","Marcelo","Winto Paulo","Ana"]],["Convidados comuns",["Riquelme","Joás","Evely","Mateus (filho do Pb. Wilton)","Pb. Tiago","Claudivane Maria Silva dos Santos","Rebeka","Tiago","Jenefer","Silas","Pb. Waldomiro","Irmã Geane (esposa do Pb. Waldomiro)","Lucas Neri","Lucas Numeriano","Rodrigo","Douglas Numeriano","José Roberto Júnior"]]];
 const pairs={Evandro:"Dinda",Dinda:"Evandro",Lucas:"Zama",Zama:"Lucas",Evanderson:"Aline",Aline:"Evanderson",Adriana:"Marcelo",Marcelo:"Adriana","Winto Paulo":"Ana",Ana:"Winto Paulo"};
+const guestTotal=groups.reduce((sum,g)=>sum+g[1].length,0);
 let category="Todas";
 const $=id=>document.getElementById(id);
 const normalize=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
 function render(){
+$("total").textContent=guestTotal;
 const query=normalize($("search").value);const sort=$("sort").value;
 $("tabs").replaceChildren();
 [["Todas",groups.flatMap(g=>g[1]).length],...groups.map(g=>[g[0],g[1].length])].forEach(([name,count])=>{
@@ -36,7 +38,7 @@ const section=document.createElement("section");section.className="group";const 
 const ul=document.createElement("ul");ul.className="names";
 found.forEach(x=>{const li=document.createElement("li");const num=document.createElement("span");num.className="num";num.textContent=String(x.index+1).padStart(2,"0");const text=document.createElement("div");text.textContent=x.name;if(name==="Testemunhas"){const note=document.createElement("span");note.className="note";note.textContent="Dupla com "+pairs[x.name];text.append(note)}li.append(num,text);ul.append(li)});section.append(ul);$("list").append(section);
 });
-$("summary").textContent=total+" de 37 convidados"+(category!=="Todas"?" · "+category:"");
+$("summary").textContent=total+" de "+guestTotal+" convidados"+(category!=="Todas"?" · "+category:"");
 $("clear").hidden=category==="Todas"&&!query&&sort==="original";
 if(!total){const e=document.createElement("div");e.className="empty";const h=document.createElement("h2");h.textContent="Nenhum convidado encontrado";const p=document.createElement("p");p.textContent="Tente outro nome ou limpe os filtros.";e.append(h,p);$("list").append(e)}
 }
