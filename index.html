@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#2f5a30"><meta name="description" content="Lista de convidados organizada por categoria, com busca e filtros."><title>Lista de convidados</title>
+<style>
+:root{--paper:#fff9f0;--ink:#243d29;--green:#2f5a30;--pink:#a82167;--line:#dedfd2;--muted:#596451}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif;font-size:16px;line-height:1.5}::selection{background:#ecd0dd;color:var(--ink)}button,input,select{font:inherit}button,select{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--pink);outline-offset:4px}button{transition:background .16s}header{border-top:7px solid var(--green);padding:55px 0 35px}main,header>div,footer{width:min(1120px,calc(100% - 40px));margin:auto}.heading{display:flex;align-items:end;justify-content:space-between;gap:24px}h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(38px,6vw,64px);line-height:1.1;letter-spacing:-.03em;margin:0 0 14px}header p{color:var(--muted);margin:0}.total{white-space:nowrap;color:var(--green);padding-bottom:4px}.total strong{font-size:32px;font-weight:400;font-variant-numeric:tabular-nums}.toolbar{padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.fields{display:grid;grid-template-columns:1fr 210px auto;align-items:end;gap:16px}label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}input,select{width:100%;border:1px solid #a5ae9e;border-radius:8px;background:white;color:var(--ink);padding:12px 14px;min-height:49px;caret-color:var(--pink)}input::placeholder{color:#67705f}.action{border:1px solid #a5ae9e;background:transparent;padding:12px 16px;border-radius:8px;color:var(--ink);min-height:49px}.action:hover{background:#e9eddf}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.tab{border:1px solid var(--line);border-radius:24px;background:transparent;padding:9px 16px;color:var(--ink);display:flex;gap:12px;align-items:center}.tab span{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums}.tab[aria-pressed=true]{background:var(--green);border-color:var(--green);color:white}.tab:hover{border-color:var(--green)}.results{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:25px 0 6px;font-size:14px;color:var(--muted)}.clear{border:0;background:none;color:var(--pink);text-decoration:underline;text-underline-offset:4px;padding:8px}.group{margin-top:30px}.group h2{font:400 28px Georgia,serif;margin:0 0 13px;display:flex;gap:12px;align-items:center}.group h2 span{font:14px Arial,sans-serif;color:var(--muted)}.names{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 36px;list-style:none;padding:0;margin:0}.names li{padding:16px 0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:15px;overflow-wrap:anywhere}.num{color:var(--pink);font-size:12px;min-width:21px;font-variant-numeric:tabular-nums}.note{font-size:12px;color:var(--muted);display:block;margin-top:3px}.empty{padding:60px 20px;text-align:center;border-bottom:1px solid var(--line)}.empty h2{font:28px Georgia,serif;margin:0 0 8px}footer{padding:50px 0 25px;color:var(--muted);font-size:12px}footer span{color:var(--pink)}[hidden]{display:none!important}
+@media(max-width:650px){header{padding-top:32px}.heading{display:block}.total{margin-top:20px}.fields{grid-template-columns:1fr 1fr}.search{grid-column:1/-1}.names{grid-template-columns:1fr}.tab{padding:8px 12px;font-size:14px}.group h2{font-size:25px}.results{align-items:start}main,header>div,footer{width:calc(100% - 32px)}}
+@media print{header{padding:10px 0}.toolbar,.clear,.action{display:none}body{background:white;font-size:12px}.group{break-inside:avoid;margin-top:18px}.names li{padding:6px 0}h1{font-size:32px}footer{padding-top:20px}}
+</style></head>
+<body>
+<header><div class="heading"><div><h1>Lista de convidados</h1><p>Cada nome, uma presença especial.</p></div><div class="total"><strong id="total">37</strong> convidados</div></div></header>
+<main>
+<section class="toolbar" aria-label="Busca e filtros"><div class="fields"><div class="search"><label for="search">Buscar convidado</label><input id="search" type="search" placeholder="Digite um nome…" autocomplete="off"></div><div><label for="sort">Ordenar nomes</label><select id="sort"><option value="original">Ordem da lista</option><option value="az">A → Z</option><option value="za">Z → A</option></select></div><button class="action" id="print" type="button">Imprimir lista</button></div><div class="tabs" id="tabs" aria-label="Filtrar por categoria"></div></section>
+<div class="results"><span id="summary" role="status" aria-live="polite"></span><button class="clear" id="clear" hidden type="button">Limpar filtros</button></div>
+<div id="list"></div>
+</main><footer>Organizada em <span>4 categorias</span> · As testemunhas são contadas individualmente.</footer>
+<script>
+const groups=[["Cantores",["Vinícius","Natália","Pedro"]],["Família",["Valéria","Xarinha","Dudu","Gediane","Juliana","Pedreiro","Júlio"]],["Testemunhas",["Evandro","Dinda","Lucas","Zama","Evanderson","Aline","Adriana","Marcelo","Winto Paulo","Ana"]],["Convidados comuns",["Riquelme","Joás","Evely","Mateus (filho do Pb. Wilton)","Pb. Tiago","Claudivane Maria Silva dos Santos","Rebeka","Tiago","Jenefer","Silas","Pb. Waldomiro","Irmã Geane (esposa do Pb. Waldomiro)","Lucas Neri","Lucas Numeriano","Rodrigo","Douglas Numeriano","José Roberto Júnior"]]];
+const pairs={Evandro:"Dinda",Dinda:"Evandro",Lucas:"Zama",Zama:"Lucas",Evanderson:"Aline",Aline:"Evanderson",Adriana:"Marcelo",Marcelo:"Adriana","Winto Paulo":"Ana",Ana:"Winto Paulo"};
+let category="Todas";
+const $=id=>document.getElementById(id);
+const normalize=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+function render(){
+const query=normalize($("search").value);const sort=$("sort").value;
+$("tabs").replaceChildren();
+[["Todas",groups.flatMap(g=>g[1]).length],...groups.map(g=>[g[0],g[1].length])].forEach(([name,count])=>{
+const b=document.createElement("button");b.type="button";b.className="tab";b.setAttribute("aria-pressed",String(category===name));b.append(document.createTextNode(name));const n=document.createElement("span");n.textContent=count;b.append(n);b.onclick=()=>{category=name;render()};$("tabs").append(b);
+});
+$("list").replaceChildren();let total=0;
+groups.forEach(([name,names])=>{
+if(category!=="Todas"&&category!==name)return;
+const found=names.map((name,index)=>({name,index})).filter(x=>normalize(x.name).includes(query));
+if(sort!=="original")found.sort((a,b)=>(sort==="az"?1:-1)*a.name.localeCompare(b.name,"pt-BR"));
+if(!found.length)return;total+=found.length;
+const section=document.createElement("section");section.className="group";const h=document.createElement("h2");h.textContent=name;const count=document.createElement("span");count.textContent=found.length+" "+(found.length===1?"pessoa":"pessoas");h.append(count);section.append(h);
+const ul=document.createElement("ul");ul.className="names";
+found.forEach(x=>{const li=document.createElement("li");const num=document.createElement("span");num.className="num";num.textContent=String(x.index+1).padStart(2,"0");const text=document.createElement("div");text.textContent=x.name;if(name==="Testemunhas"){const note=document.createElement("span");note.className="note";note.textContent="Dupla com "+pairs[x.name];text.append(note)}li.append(num,text);ul.append(li)});section.append(ul);$("list").append(section);
+});
+$("summary").textContent=total+" de 37 convidados"+(category!=="Todas"?" · "+category:"");
+$("clear").hidden=category==="Todas"&&!query&&sort==="original";
+if(!total){const e=document.createElement("div");e.className="empty";const h=document.createElement("h2");h.textContent="Nenhum convidado encontrado";const p=document.createElement("p");p.textContent="Tente outro nome ou limpe os filtros.";e.append(h,p);$("list").append(e)}
+}
+$("search").addEventListener("input",render);$("sort").addEventListener("change",render);$("clear").onclick=()=>{category="Todas";$("search").value="";$("sort").value="original";render()};$("print").onclick=()=>window.print();render();
+</script></body></html>
